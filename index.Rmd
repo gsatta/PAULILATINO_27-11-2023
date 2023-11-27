@@ -19,7 +19,7 @@ library(dplyr)
 library(raster)
 ```
 
-```{rPrepare the crowns file_2, eval=FALSE}
+```{r Prepare the crowns file_2, eval=FALSE}
 # Load all the necessary files
 crowns0 <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/CHIOME_ANALISI_NDVI_2.shp")
 ```
@@ -1210,8 +1210,7 @@ rm(list=ls())
 
 ### **Create a interactive map**
 
-In this section, a interactive map is created..
-
+In this section, a interactive map is created using the leaflet package. There is a customized palette for visualize different colors in the trend class map. The map is also stored in local.
 
 ```{r Load the packages, message=FALSE, warning=FALSE}
 # Load the necessary packages
@@ -1267,7 +1266,6 @@ color_factor_circle <- colorFactor(
   domain = c("+", "-")
 )
 ```
-
 
 ```{r Make the intercative map, message=FALSE, warning=FALSE}
 # Create Leaflet map
@@ -1335,6 +1333,8 @@ map <- map %>%
 # Visualize the map
 map
 ```
+
+The map show the classification of the trend calculated using a Theil-Sen regression. Particularly
 
 ```{r Save only the map, eval=FALSE}
 # Save only the map in html format
