@@ -739,7 +739,7 @@ count_class <- table(results_df$Trend_Class)
 
 # Calcola la percentuale e formatta la tabella
 percent_table <- prop.table(count_class) * 100
-simple_percente_table <- round(tabella_percentuale, digits = 0)
+simple_percente_table <- round(percent_table, digits = 0)
 formatted_table <- cbind(Count = count_class, Percent = simple_percente_table)
 
 # Stampa la tabella
@@ -747,14 +747,14 @@ print(formatted_table)
 
 ```
 
-```{r Clean the R enviroment}
+```{r Creation of the results dataframe_4}
 # Clean the R enviroment
 rm(list=ls())
 ```
 
 ------------------------------------------------------------------------
 
-### **DBEST algorithm**
+### **DBEST alghoritm**
 
 In this section, the Detecting Breakpoints and Estimating Segments in Trends algorithm was applied to segment and analyze shifts in the time series of NDVI. The analysis was carried out using DBEST package version 1.8 (<https://cran.r-project.org/web/packages/DBEST/index.html>, accessed 17 October 2023) into R studio software version 4.3.1. In particular the change detection algorithm was used to detects the trend changes, determines their type (abrupt or non-abrupt), and estimates their timing, magnitude, number, direction and change periods. For each time series, the dbest change detection algorithm was applied to identify statistically significant decreasing trends (α=0.05) whit the lowest magnitude to detect changes, set at 0.05.
 
