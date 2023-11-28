@@ -21,7 +21,7 @@ library(raster)
 
 ```{r Prepare the crowns file_2, eval=FALSE}
 # Load all the necessary files
-crowns0 <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/CHIOME_ANALISI_NDVI_2.shp")
+crowns0 <- st_read("./SHP/CHIOME_ANALISI_NDVI_2.shp")
 ```
 
 ```{r Prepare the crowns file_3, eval=FALSE}
@@ -36,7 +36,7 @@ crowns <- crowns %>%
   mutate(CODICE_UNIVOCO = paste(AREA, ID, sep = "_"))
 
 # Save the sf objet in Shapefile format
-st_write(crowns, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/CHIOME_ANALISI_NDVI_2_correct.shp", append = FALSE)
+st_write(crowns, "./SHP/CHIOME_ANALISI_NDVI_2_correct.shp", append = FALSE)
 
 # Split the crowns object by area
 crowns_list <- split(crowns, crowns$AREA)
@@ -44,7 +44,7 @@ crowns_list <- split(crowns, crowns$AREA)
 # Save one shp file for each area
 for (i in seq_along(crowns_list)) {
   area_name <- names(crowns_list)[i]
-  file_name <- paste0("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/crowns_areas/", area_name, ".shp")
+  file_name <- paste0("./SHP/crowns_areas/", area_name, ".shp")
   st_write(crowns_list[[i]], file_name, append = FALSE)
 }
 ```
@@ -53,7 +53,7 @@ This is the structure and composition of the crowns file:
 
 ```{r Prepare the crowns file_4}
 # Load the NDVI crowns file previously elaborated
-crowns <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/CHIOME_ANALISI_NDVI_2_correct.shp")
+crowns <- st_read("./SHP/CHIOME_ANALISI_NDVI_2_correct.shp")
 ```
 
 ```{r Prepare the crowns file_5, echo= FALSE}
@@ -74,13 +74,13 @@ In this section the NDVI multilayer raster file is cropped according to the exte
 
 ```{r Crop the NDVI raster file_1}
 # Load the raster multulayer file of the entire area
-ndvi <- terra::rast("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/MODELLO/RASTER/ndvi_merged.tif")
+ndvi <- terra::rast("./RASTER/ndvi_merged.tif")
 
 # Load the NDVI crowns file
-crowns <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/CHIOME_ANALISI_NDVI_2_correct.shp")
+crowns <- st_read("./SHP/CHIOME_ANALISI_NDVI_2_correct.shp")
 
 # set the output folder
-output_folder <- "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/RASTER/NDVI_CLIPPED"
+output_folder <- "./RASTER/NDVI_CLIPPED"
 ```
 
 ```{r Crop the NDVI raster file_2}
@@ -130,16 +130,16 @@ library(dplyr)
 
 ```{r Rename the raster layer_2, eval=FALSE}
 # Set the cropped raster file folder
-raster_folder0  <- "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/RASTER/NDVI_CLIPPED"
+raster_folder0  <- "./RASTER/NDVI_CLIPPED"
 
 # List files in the folders
 raster_files0 <- list.files(raster_folder0, pattern = ".tif$", full.names = TRUE)
 
-# Set the raste file folder
-output_folder0 <- "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/RASTER/NDVI_CLIPPED_NEW"
+# Set the raster file folder
+output_folder0 <- "./RASTER/NDVI_CLIPPED_NEW"
 
 # Read the csv file of the satellite images dates
-date <- read_csv("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/date.csv", col_names = TRUE)
+date <- read_csv("./CSV/date.csv", col_names = TRUE)
 ```
 
 ```{r Rename the raster layer_3, eval=FALSE}
@@ -171,9 +171,9 @@ In this section the pixel values from inside, at least for 2/3 of their extensio
 
 ```{r Extraxct the NDVI pixels_1, eval=FALSE}
 # Set the path to the shapefile and raster file
-shapefile_folder  <- "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/crowns_areas"
-raster_folder  <- "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/RASTER/NDVI_CLIPPED_NEW"
-output_folder <- "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_EXTRACTED"
+shapefile_folder  <- "./SHP/crowns_areas"
+raster_folder  <- "./RASTER/NDVI_CLIPPED_NEW"
+output_folder <- "./SHP/NDVI_EXTRACTED"
 ```
 
 ```{r Extraxct the NDVI pixels_2, eval=FALSE}
@@ -262,10 +262,10 @@ library(tidyr)
 
 ```{r Prepare the NDVI extracted file_2, eval = FALSE}
 # Set the input folder of the extracted ndvi files
-INPUT_folder <- "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_EXTRACTED"
+INPUT_folder <- "./SHP/NDVI_EXTRACTED"
 
 # Load the  dates csv files
-date <- read_csv("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/date.csv", col_names = TRUE)
+date <- read_csv("./CSV/date.csv", col_names = TRUE)
 
 # Get the list of SHP files in the folder
 INPUT_shp <- list.files(path = INPUT_folder, pattern = "\\.shp$", full.names = TRUE)
@@ -315,13 +315,13 @@ Create one unique file with all the sf object inside the list and save it in the
 
 ```{r Prepare the NDVI extracted file_3, eval = FALSE}
 # Set the shapefile folder of the crowns areas
-shapefile_folder  <- "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/crowns_areas"
+shapefile_folder  <- "./SHP/crowns_areas"
 
 # Merge all the object of the list in one unique sf object
 combined_long_format <- bind_rows(long_format_list)
 
 # specify the file directory where save the combined sf object
-output_file3 <- "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_VALUES/NDVI_VALUES.shp"
+output_file3 <- "./SHP/NDVI_VALUES/NDVI_VALUES.shp"
 
 # Save the combined sf object in shp file 
 st_write(combined_long_format, output_file3, append= FALSE)
@@ -347,7 +347,7 @@ library(sf)
 
 ```{r Compute the mean NDVI_2, eval= FALSE}
 # Set the directory of the crown NDVI values
-NDVI_VALUES <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_VALUES/NDVI_VALUES.shp")
+NDVI_VALUES <- st_read("./SHP/NDVI_VALUES/NDVI_VALUES.shp")
 
 # Calculate the mean NDVI for each date and area
 ndvi_avg_areas <- NDVI_VALUES %>%
@@ -355,11 +355,11 @@ ndvi_avg_areas <- NDVI_VALUES %>%
   summarise(mean_NDVI = mean(ndvi, na.rm = TRUE))
 
 # Save the combined sf object in a shp file
-st_write(ndvi_avg_areas, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_VALUES/ndvi_avg_areas.shp", append= FALSE)
+st_write(ndvi_avg_areas, "./SHP/NDVI_VALUES/ndvi_avg_areas.shp", append= FALSE)
 ```
 
 ```{r Compute the mean NDVI_3, include=FALSE}
-ndvi_avg_areas <- read_csv("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_VALUES/ndvi_avg_areas.shp")
+ndvi_avg_areas <- read_csv("./SHP/NDVI_VALUES/ndvi_avg_areas.shp")
 ```
 
 ```{r Compute the mean NDVI_4}
@@ -394,13 +394,13 @@ library(lubridate)
 options(scipen = 999)
 
 # Load the file of the mean NDVI values for each area.
-ndvi_avg0 <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_VALUES/ndvi_avg_areas.shp")
+ndvi_avg0 <- st_read("./SHP/NDVI_VALUES/ndvi_avg_areas.shp")
 
 # Create a new dataframe excluding the 2023 dates
 ndvi_avg <- ndvi_avg0 %>% filter(year(date) != 2023)
 
 areas <- unique(ndvi_avg$AREA)
-write.csv(areas, file = "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/CSV/areas.csv", row.names = FALSE, col.names = TRUE)
+write.csv(areas, file = "./CSV/areas.csv", row.names = FALSE, col.names = TRUE)
 
 # Create a new columm for the numeric dates
 ndvi_avg$date_num <- as.numeric(ndvi_avg$date - min(ndvi_avg$date))
@@ -445,10 +445,10 @@ p1 <- ggplot(data_with_results, aes(x = date, y = mean_NDVI, color = AREA)) +
   theme_minimal()
 
 # Save the graph in the desired directory
-ggsave("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/NDVI-Trend-Analysis-Paulilatino_files/figure-gfm/NDVI_means_area1.jpg", plot = p1, dpi = 200, width = 2100, height = 1499, units = "px")
+ggsave("./index_files/figure-gfm/NDVI_means_area1.jpg", plot = p1, dpi = 200, width = 2100, height = 1499, units = "px")
 ```
 
-![Graph of the mean NDVI for each area (1)](G:/Altri%20computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/NDVI-Trend-Analysis-Paulilatino_files/figure-gfm/NDVI_means_area1.jpg)
+![Graph of the mean NDVI for each area (1)](./index_files/figure-gfm/NDVI_means_area1.jpg)
 
 The graph show graphically the mean ndvi trend of each area. The pound symbol indicates areas where the change in trend is significant
 
@@ -464,10 +464,10 @@ p2 <- ggplot(data = data_with_results, aes(x = date, y = mean_NDVI, group = AREA
     theme_minimal()
 
 # Save the graph in the desired directory
-ggsave("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/NDVI-Trend-Analysis-Paulilatino_files/figure-gfm/NDVI_means_area2.jpg", plot = p2, dpi = 200, width = 2100, height = 1499, units = "px")
+ggsave("./index_files/figure-gfm/NDVI_means_area2.jpg", plot = p2, dpi = 200, width = 2100, height = 1499, units = "px")
 ```
 
-![Graph of the mean NDVI for each area (2)](G:/Altri%20computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/NDVI-Trend-Analysis-Paulilatino_files/figure-gfm/NDVI_means_area2.jpg)
+![Graph of the mean NDVI for each area (2)](./index_files/figure-gfm/NDVI_means_area2.jpg)
 
 ```{r Plot the NDVI mean of each area_4}
 # Clean the R enviroment
@@ -482,7 +482,7 @@ In this section the crowns polygon files are prepared by combining the different
 
 ```{r Prepare the crowns polygons_1, eval = FALSE}
 # Set the shapefile foler of all the crowns polygons files.
-shapefile_folder  <- "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/crowns_areas"
+shapefile_folder  <- "./SHP/crowns_areas"
 
 # Create a list of the files inside the shapefile folder
 shapefile_files <- list.files(shapefile_folder, pattern = ".shp$", full.names = TRUE)
@@ -501,11 +501,11 @@ crowns <- bind_rows(crowns0)
 st_crs(crowns) <- 32632 # set the EPSG 32632 reference system
 
 # Save the new crowns file 
-st_write(crowns, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/crowns_merged.shp", append = FALSE)
+st_write(crowns, "./SHP/crowns_merged.shp", append = FALSE)
 ```
 
 ```{r Prepare the crowns polygons_2, include=FALSE}
-crowns <- read_csv("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/crowns_merged.shp")
+crowns <- read_csv("./SHP/crowns_merged.shp")
 ```
 
 ```{r Prepare the crowns polygons_3}
@@ -534,9 +534,9 @@ library(mblm)
 
 ```{r Start the elaboration for individual Tree crowns_2, eval = FALSE}
 # Load the crowns file and the pixel file in shp format
-crowns <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/crowns_merged.shp", crs = 32632)
+crowns <- st_read("./SHP/crowns_merged.shp", crs = 32632)
 
-NDVI_VALUES_0 <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_VALUES/NDVI_VALUES.shp", crs = 32632)
+NDVI_VALUES_0 <- st_read("./SHP/NDVI_VALUES/NDVI_VALUES.shp", crs = 32632)
 
 # Create a new dataframe excluding the 2023 dates
 NDVI_VALUES <- NDVI_VALUES_0 %>% filter(year(date) != 2023)
@@ -559,11 +559,11 @@ filtered_df <- cleaned_df %>%
   slice(1:60)
 
 # Save the combined sf object in the shapefile
-st_write(filtered_df, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_VALUES/merged_data_ndvi.shp", append= FALSE)
+st_write(filtered_df, "./SHP/NDVI_VALUES/merged_data_ndvi.shp", append= FALSE)
 ```
 
 ```{r Start the elaboration for individual Tree crowns_3, include=FALSE}
-filtered_df <- read_csv("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_VALUES/merged_data_ndvi.shp")
+filtered_df <- read_csv("./SHP/NDVI_VALUES/merged_data_ndvi.shp")
 ```
 
 ```{r Start the elaboration for individual Tree crowns_4}
@@ -601,7 +601,7 @@ library(readr)
 
 ```{r Compute the Theil-Sen regression_2, eval = FALSE}
 # Load the new combinated file
-NDVI_VALUES <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_VALUES/merged_data_ndvi.shp")
+NDVI_VALUES <- st_read("./SHP/NDVI_VALUES/merged_data_ndvi.shp")
 ```
 
 ```{r Compute the Theil-Sen regression_3, eval=FALSE}
@@ -647,7 +647,7 @@ for (cod in cod_list) {
 }
 
 # Store the list
-saveRDS(results_list, file = "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/list/results_list.rds")
+saveRDS(results_list, file = "./LIST/results_list.rds")
 ```
 
 ```{r Compute the Theil-Sen regression_4}
@@ -673,7 +673,7 @@ library(progress)
 options(scipen = 999)
 
 # Load the list of the Theil-Sen coefficients an MK Test results.
-results_list <- readRDS("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/list/results_list.rds")
+results_list <- readRDS("./LIST/results_list.rds")
 
 # Initialise an empty data frame
 results_df <- data.frame()
@@ -719,7 +719,7 @@ results_df <- results_df %>%
   ))
 
 # Store the resuls_df
-write_csv(results_df, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/CSV/results_df_class.csv")
+write_csv(results_df, "./CSV/results_df_class.csv")
 ```
 
 ```{r Creation of the results dataframe_3, message=FALSE, warning=FALSE}
@@ -727,7 +727,7 @@ write_csv(results_df, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIV
 options(scipen = 999)
 
 # Load the csv file of the results
-results_df <- read_csv("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/CSV/results_df_class.csv")
+results_df <- read_csv("./CSV/results_df_class.csv")
 
 # View a preview of the data frame
 head(results_df)
@@ -744,7 +744,6 @@ formatted_table <- cbind(Count = count_class, Percent = simple_percente_table)
 
 # Stampa la tabella
 print(formatted_table)
-
 ```
 
 ```{r Creation of the results dataframe_4}
@@ -776,10 +775,10 @@ library(lubridate)
 options(scipen = 999)
 
 # Import the dataframe 
-dataframe <- read_csv("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/CSV/results_df_class.csv")
+dataframe <- read_csv("./CSV/results_df_class.csv")
 
 # Load the NDVI values shapefile
-NDVI_VALUES <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_VALUES/merged_data_ndvi.shp")
+NDVI_VALUES <- st_read("./SHP/NDVI_VALUES/merged_data_ndvi.shp")
 
 # Extract rows where Trend_Class is different from 0
 filtered_df <- subset(dataframe, Trend_Class != 0)
@@ -841,12 +840,12 @@ for (cod_value in names(dbest_results_list_0)) {
 }
 
 # Store the list
-saveRDS(dbest_results_list, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/list/dbest_results_list.rds")
+saveRDS(dbest_results_list, "./LIST/dbest_results_list.rds")
 ```
 
 ```{r DBEST alghoritm_3, eval = FALSE}
 # Load the new list
-dbest_results_list <- readRDS("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/list/dbest_results_list.rds")
+dbest_results_list <- readRDS("./LIST/dbest_results_list.rds")
 
 # Initialize a list to store the dates of greatest negative variation
 negative_change_dates <- list()
@@ -873,13 +872,13 @@ for (cod_value in names(dbest_results_list)) {
 }
 
 # Store the list
-saveRDS(negative_change_dates, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/list/negative_change_dates.rds")
+saveRDS(negative_change_dates, "./LIST/negative_change_dates.rds")
 
 # Load the list of the ndvi negative change dates
-negative_change_dates <- readRDS("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/list/negative_change_dates.rds")
+negative_change_dates <- readRDS("./LIST/negative_change_dates.rds")
 
 # Load the csv file of th satellite imagies dates
-dates <- read_csv("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/date.csv")
+dates <- read_csv("./CSV/date.csv")
 
 # Filter dates by removing 2023
 dates <- dates %>% filter(year(date) != 2023)
@@ -937,7 +936,7 @@ for (i in names(dbest_results_list)) {
 
 ```{r DBEST alghoritm_4, eval=FALSE}
 # Load the list of the ndvi negative change dates
-negative_change_dates <- readRDS("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/list/negative_change_dates.rds")
+negative_change_dates <- readRDS("./LIST/negative_change_dates.rds")
 
 # Create an empty vector for element names
 element_names <- c()
@@ -964,12 +963,12 @@ final_dataframe <- data.frame(COD = element_names, start = start_dates)
 final_dataframe$AREA <- gsub("_\\d+$", "", final_dataframe$COD)
 
 # Store the final dataframe
-write.csv(final_dataframe, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/finaldataframe.csv")
+write.csv(final_dataframe, "./CSV/finaldataframe.csv")
 ```
 
 ```{r DBEST alghoritm_5, message=FALSE, warning=FALSE, echo = FALSE}
 # Load the final dataframe
-final_dataframe <- read_csv("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/finaldataframe.csv")
+final_dataframe <- read_csv("./CSV/finaldataframe.csv")
 
 # View a preview of the final dataframe
 final_dataframe
@@ -997,7 +996,7 @@ library(plotly)
 ```
 
 ```{r, warning = FALSE, message=FALSE, eval = FALSE}
-final_dataframe <- read_csv("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/CSV/finaldataframe.csv")
+final_dataframe <- read_csv("./CSV/finaldataframe.csv")
 
 final_dataframe$...1 <- NULL
 
@@ -1026,10 +1025,10 @@ p <- ggplot(data = final_dataframe, aes(x = start, y = AREA)) +
         axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Salva il tuo grafico nella directory desiderata
-ggsave("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/NDVI-Trend-Analysis-Paulilatino_files/figure-gfm/plot.jpg", plot = p)
+ggsave("./index_files/figure-gfm/plot.jpg", plot = p)
 ```
 
-![Graph of the negative change dates (1)](G:/Altri%20computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/NDVI-Trend-Analysis-Paulilatino_files/figure-gfm/plot.jpg)
+![Graph of the negative change dates (1)](./index_files/figure-gfm/plot.jpg)
 
 ```{r, warning=FALSE, message = FALSE, eval = FALSE}
 # Crea una nuova colonna 'IsMax' che indica se il conteggio è il massimo per ogni 'AREA'
@@ -1040,7 +1039,7 @@ final_dataframe <- final_dataframe %>%
 
 final_dataframe$start_date <- lubridate::ym(final_dataframe$start)
 
-write_csv(final_dataframe, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/CSV/Weather/final_dataframe.csv" )
+write_csv(final_dataframe, "./CSV/Weather/final_dataframe.csv" )
 
 p <- ggplot(data = final_dataframe, aes(x = start_date, y = AREA, text = PopupText)) +
   geom_text(aes(label = Count_start, color = IsMax), vjust = +0.4) +
@@ -1052,10 +1051,10 @@ p <- ggplot(data = final_dataframe, aes(x = start_date, y = AREA, text = PopupTe
   theme_bw()
 
 # Salva il tuo grafico nella directory desiderata
-ggsave("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/NDVI-Trend-Analysis-Paulilatino_files/figure-gfm/plot2.jpg", plot = p)
+ggsave("./index_files/figure-gfm/plot2.jpg", plot = p)
 ```
 
-![Graph of the negative change dates (2)](G:/Altri%20computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/SCRIPT/TrendNdviPaulilatino/NDVI-Trend-Analysis-Paulilatino_files/figure-gfm/plot2.jpg)
+![Graph of the negative change dates (2)](./index_files/figure-gfm/plot2.jpg)
 
 ```{r}
 # Ripulisci l'enviroment di R
@@ -1078,10 +1077,10 @@ library(quadcleanR)
 
 ```{r Prepare the files_2, eval = FALSE}
 # Load the shp file of all the crown geometries
-NDVI_VALUES <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_VALUES/merged_data_ndvi.shp")
+NDVI_VALUES <- st_read("./SHP/NDVI_VALUES/merged_data_ndvi.shp")
 
 # Load the trend classification csv file
-class <- read_csv("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/CSV/results_df_class.csv", col_names = T)
+class <- read_csv("./CSV/results_df_class.csv", col_names = T)
 
 # Group the NDVI_VALUES dataframe by the COD column and summarise by taking only the first geometry
 merged_data <- NDVI_VALUES %>%
@@ -1117,12 +1116,12 @@ pixel_trend$Trend_Description <- sapply(pixel_trend$Trend_Class, classify_trend)
 pixel_trend$Trend_Description <- as.character(pixel_trend$Trend_Description)
 
 # Store the data frame in one shp file
-st_write(pixel_trend, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_VALUES/pixels_trend3.shp", append = FALSE)
+st_write(pixel_trend, "./SHP/NDVI_VALUES/pixels_trend3.shp", append = FALSE)
 ```
 
 ```{r Prepare the files_4, echo = FALSE, message = FALSE, warning = FALSE}
 # Load the pixel trend shp file
-pixel_trend <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_VALUES/pixels_trend3.shp")
+pixel_trend <- st_read("./SHP/NDVI_VALUES/pixels_trend3.shp")
 
 head(pixel_trend)
 ```
@@ -1140,7 +1139,7 @@ In this section is loaded the shapefile of the root and soil samples token in th
 
 ```{r Load the samples shapefile_1, eval=FALSE}
 # Loading the merged_df file to insert the sampled points into the map
-sample_32632 <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/VETTORIALI/DB_sample_vector.shp")
+sample_32632 <- st_read("./SHP/FILES/DB_sample_vector.shp")
 
 # Assign the CRS of ex_sf to points
 sample_wgs84 <- st_transform(sample_32632, crs = 4326)
@@ -1153,7 +1152,7 @@ sample_wgs84$lat <- coords[, 2]
 sample_wgs84$long <- coords[, 1]
 
 # Store the sample shp in wgs84 reference system
-st_write(sample_wgs84, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/sample_points.shp", append = FALSE )
+st_write(sample_wgs84, "./SHP/FILES/sample_points.shp", append = FALSE )
 ```
 
 ```{r Load the samples shapefile_2}
@@ -1169,13 +1168,13 @@ In this section is loaded the Paulilatino municipality boundaries shapefile and 
 
 ```{r Load the Paulilatino municipality boundaries_1, eval=FALSE}
 # Load the Paulilatino municipality boundaries shapefile
-lim_paul_32632 <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/VETTORIALI/Limite_Amministrativo_Paulilatino_EPSG-32632.shp")
+lim_paul_32632 <- st_read("./SHP/FILES//Limite_Amministrativo_Paulilatino_EPSG-32632.shp")
 
 # Assign the CRS of ex_sf to points
 lim_paul_wgs84 <- st_transform(lim_paul_32632, crs = 4326)
 
 # Store the shp file 
-st_write(lim_paul_wgs84, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/VETTORIALI/Limite_Amministrativo_Paulilatino_wgs84.shp", append = FALSE )
+st_write(lim_paul_wgs84, "./SHP/FILES/Limite_Amministrativo_Paulilatino_wgs84.shp", append = FALSE )
 ```
 
 ```{r Load the Paulilatino municipality boundaries_2}
@@ -1188,11 +1187,11 @@ rm(list=ls())
 ### **Load the outbreak shapefile**
 
 ```{r Load the outbreak shapefile_1, eval=FALSE}
-focolai0 <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/FOCOLAI.shp")
+focolai0 <- st_read("./SHP/FILES/FOCOLAI.shp")
 
 focolai <- st_transform(focolai0, crs = 4326)
 
-st_write(focolai, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/FOCOLAI_wgs84.shp", append = FALSE )
+st_write(focolai, "./SHP/FILES/FOCOLAI_wgs84.shp", append = FALSE )
 ```
 
 ```{r Load the outbreak shapefile_2, eval=FALSE}
@@ -1206,13 +1205,13 @@ rm(list=ls())
 
 ```{r Load the plots shapefile, eval=FALSE}
 # Load the plots shapefile
-plots <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/BUFFER_ANALISI_NDVI.shp")
+plots <- st_read("./SHP/FILES/BUFFER_ANALISI_NDVI.shp")
 
 # Assign the CRS of ex_sf to points
 plots <- st_transform(plots, crs = 4326)
 
 # Store the new shapefile converter to wgs84
-st_write(plots, "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/BUFFER_ANALISI_NDVI_WGS84.shp", append = TRUE)
+st_write(plots, "./SHP/FILES/BUFFER_ANALISI_NDVI_WGS84.shp", append = TRUE)
 ```
 
 ```{r Load the plots shapefile_2, eval=FALSE}
@@ -1241,19 +1240,19 @@ library(htmlwidgets)
 options(scipen = 999)
 
 # Load the shp file of the crowns coefficients values 
-pixel_trend <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/NDVI_VALUES/pixels_trend3.shp")
+pixel_trend <- st_read("./SHP/NDVI_VALUES/pixels_trend3.shp")
 
 # Load the shp file of the point sample location
-samples <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/sample_points.shp")
+samples <- st_read("./SHP/FILES/sample_points.shp")
 
 # Load the shp file of the administrative boundaries of Paulilatino municipality
-lim_paul_wgs84 <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/VETTORIALI/Limite_Amministrativo_Paulilatino_wgs84.shp")
+lim_paul_wgs84 <- st_read("./SHP/FILES/Limite_Amministrativo_Paulilatino_wgs84.shp")
 
 # Load the shp file of the outbreack in the Paulilatino area
-focolai_wgs84 <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/FOCOLAI_wgs84.shp")
+focolai_wgs84 <- st_read("./SHP/FILES/FOCOLAI_wgs84.shp")
 
 # Load the shp file of the plots location
-plots_wgs84 <- st_read("G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/VETTORIALI/BUFFER_ANALISI_NDVI_WGS84.shp")
+plots_wgs84 <- st_read("./SHP/FILES/BUFFER_ANALISI_NDVI_WGS84.shp")
 ```
 
 ```{r Create a custom palette, message=FALSE, warning=FALSE}
@@ -1350,7 +1349,7 @@ map
 
 ```{r Save only the map, eval=FALSE}
 # Save only the map in html format
-saveWidget(map, file = "G:/Altri computer/Il_mio_computer/DOTTORATO/PROGETTI/OLIVASTRO_PAULILATINO/REGRESSIONE/map4.html", selfcontained = FALSE)
+saveWidget(map, file = "./HTML/map1.html", selfcontained = FALSE)
 ```
 
 ```{r Clean the R enviroment, eval=FALSE}
